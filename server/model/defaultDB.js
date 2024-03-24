@@ -20,7 +20,7 @@ const initializeDB = async () => {
       const defaultCategory = [
         { name: "Category 1" },
         { name: "Category 2" },
-        { name: "Category 3" },
+        { name: "Category 3" }
       ];
 
       // Insert the default users into the database
@@ -57,7 +57,7 @@ const initializeDB = async () => {
       const defaultSubCategory = [
         { CategoryID: existingCategory[0]._id, SubCategoryName: "Sub Category 1" },
         { CategoryID: existingCategory[1]._id, SubCategoryName: "Sub Category 2" },
-        { CategoryID: existingCategory[2]._id, SubCategoryName: "Sub Category 3" },
+        { CategoryID: existingCategory[2]._id, SubCategoryName: "Sub Category 3" }
       ];
 
       // Insert the default users into the database
