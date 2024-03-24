@@ -8,7 +8,7 @@ const initializeDB = async () => {
   // Connect to the database
   dbConnect();
 
-  // Check if there are any existing users
+  // Check if there are any existing data available
   const existingCategory = await Category.find();
   const existingProduct = await Product.find();
   const existingSubCategory = await SubCategory.find();
@@ -20,7 +20,7 @@ const initializeDB = async () => {
       const defaultCategory = [
         { name: "Category 1" },
         { name: "Category 2" },
-        { name: "Category 3" }
+        { name: "Category 3" },
       ];
 
       // Insert the default users into the database
@@ -37,9 +37,24 @@ const initializeDB = async () => {
     try {
       // Add three default users
       const defaultProduct = [
-        { product_Name: "Product 1", product_Price: "10", category_Name: "Category 1", subcategory_Name: "Sub Category 1" },
-        { product_Name: "Product 2", product_Price: "20", category_Name: "Category 2", subcategory_Name: "Sub Category 2" },
-        { product_Name: "Product 3", product_Price: "30", category_Name: "Category 3", subcategory_Name: "Sub Category 3" }
+        {
+          product_Name: "Product 1",
+          product_Price: "10",
+          category_Name: "Category 1",
+          subcategory_Name: "Sub Category 1",
+        },
+        {
+          product_Name: "Product 2",
+          product_Price: "20",
+          category_Name: "Category 2",
+          subcategory_Name: "Sub Category 2",
+        },
+        {
+          product_Name: "Product 3",
+          product_Price: "30",
+          category_Name: "Category 3",
+          subcategory_Name: "Sub Category 3",
+        },
       ];
 
       // Insert the default users into the database
@@ -51,17 +66,26 @@ const initializeDB = async () => {
     }
   }
 
+  // Fetch categories from the database
+  const categories = await Category.find();
+
+  // If no categories exist, log an error and abort seeding subcategories
+  if (categories.length === 0) {
+    console.error("No categories found in the database. Aborting subcategory seeding.");
+    return;
+  }
+
   // If no data exist, seed the database with default data
   if (existingSubCategory.length === 0) {
     try {
       const defaultSubCategory = [
-        { CategoryID: existingCategory[0]._id, SubCategoryName: "Sub Category 1" },
-        { CategoryID: existingCategory[1]._id, SubCategoryName: "Sub Category 2" },
-        { CategoryID: existingCategory[2]._id, SubCategoryName: "Sub Category 3" }
+        { CategoryID: categories[0]._id, SubCategoryName: "Sub Category 1" },
+        { CategoryID: categories[1]._id, SubCategoryName: "Sub Category 2" },
+        { CategoryID: categories[2]._id, SubCategoryName: "Sub Category 3" },
       ];
 
       // Insert the default users into the database
-      await SubCategory.insertMany(defaultProduct);
+      await SubCategory.insertMany(defaultSubCategory);
 
       console.log("Default SubCategory data seeded successfully");
     } catch (error) {
