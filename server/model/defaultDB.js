@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const dbConnect = require("../config/dbconfig");
-const { Category, Product } = require("../model/category_product_Model");
+const Category = require("../model/categoryModel");
+const Product = require("../model/productModel");
+const SubCategory = require("../model/subcategoryModel");
 
 const initializeDB = async () => {
   // Connect to the database
@@ -9,6 +11,7 @@ const initializeDB = async () => {
   // Check if there are any existing users
   const existingCategory = await Category.find();
   const existingProduct = await Product.find();
+  const existingSubCategory = await SubCategory.find();
 
   // If no data exist, seed the database with default data
   if (existingCategory.length === 0) {
@@ -34,9 +37,9 @@ const initializeDB = async () => {
     try {
       // Add three default users
       const defaultProduct = [
-        { name: "Product 1", price: 10, categories: [] },
-        { name: "Product 2", price: 20, categories: [] },
-        { name: "Product 3", price: 30, categories: [] },
+        { product_Name: "Product 1", product_Price: 10, category_Name: [], subcategory_Name: [] },
+        { product_Name: "Product 2", product_Price: 20, category_Name: [], subcategory_Name: [] },
+        { product_Name: "Product 2", product_Price: 30, category_Name: [], subcategory_Name: [] },
       ];
 
       // Insert the default users into the database
@@ -45,6 +48,24 @@ const initializeDB = async () => {
       console.log("Default product data seeded successfully");
     } catch (error) {
       console.error(`Error seeding default product data: ${error.message}`);
+    }
+  }
+
+  // If no data exist, seed the database with default data
+  if (existingSubCategory.length === 0) {
+    try {
+      const defaultSubCategory = [
+        { CategoryID: existingCategory[0]._id, SubCategoryName: [] },
+        { CategoryID: existingCategory[1]._id, SubCategoryName: [] },
+        { CategoryID: existingCategory[2]._id, SubCategoryName: [] },
+      ];
+
+      // Insert the default users into the database
+      await Product.insertMany(defaultProduct);
+
+      console.log("Default SubCategory data seeded successfully");
+    } catch (error) {
+      console.error(`Error seeding default SubCategory data: ${error.message}`);
     }
   }
 };
