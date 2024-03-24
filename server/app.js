@@ -18,7 +18,7 @@ app.use((req, res, next) => {
 });
 
 // routes
-app.use("/api/users", require("./routes/category_product_Routes"));
+app.use("/api/users", require("./routes/index.router"));
 module.exports = app;
 /* Production
 if (process.env.NODE_ENV === "production") {
