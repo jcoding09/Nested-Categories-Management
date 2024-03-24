@@ -37,9 +37,9 @@ const initializeDB = async () => {
     try {
       // Add three default users
       const defaultProduct = [
-        { product_Name: "Product 1", product_Price: 10, category_Name: [], subcategory_Name: [] },
-        { product_Name: "Product 2", product_Price: 20, category_Name: [], subcategory_Name: [] },
-        { product_Name: "Product 2", product_Price: 30, category_Name: [], subcategory_Name: [] },
+        { product_Name: "Product 1", product_Price: "10", category_Name: "Category 1", subcategory_Name: "Sub Category 1" },
+        { product_Name: "Product 2", product_Price: "20", category_Name: "Category 2", subcategory_Name: "Sub Category 2" },
+        { product_Name: "Product 3", product_Price: "30", category_Name: "Category 3", subcategory_Name: "Sub Category 3" }
       ];
 
       // Insert the default users into the database
@@ -55,13 +55,13 @@ const initializeDB = async () => {
   if (existingSubCategory.length === 0) {
     try {
       const defaultSubCategory = [
-        { CategoryID: existingCategory[0]._id, SubCategoryName: [] },
-        { CategoryID: existingCategory[1]._id, SubCategoryName: [] },
-        { CategoryID: existingCategory[2]._id, SubCategoryName: [] },
+        { CategoryID: existingCategory[0]._id, SubCategoryName: "Sub Category 1" },
+        { CategoryID: existingCategory[1]._id, SubCategoryName: "Sub Category 2" },
+        { CategoryID: existingCategory[2]._id, SubCategoryName: "Sub Category 3" },
       ];
 
       // Insert the default users into the database
-      await Product.insertMany(defaultProduct);
+      await SubCategory.insertMany(defaultProduct);
 
       console.log("Default SubCategory data seeded successfully");
     } catch (error) {
